@@ -10,7 +10,7 @@ m = date["m"].to_i
 today = Date.today
 
 if y != 0
-elsif y == 0
+elsif y == 0 || m == 0
   y = today.year
   m = today.month
 end
