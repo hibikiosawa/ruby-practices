@@ -8,10 +8,10 @@ count = 0
 
 scores.each do |s|
   shots << if s == 'X'
-    10
-    else
-      s.to_i
-  end
+             10
+           else
+             s.to_i
+           end
 end
 
 while count < 10
@@ -41,3 +41,4 @@ while count < 10
 end
 
 puts total
+
