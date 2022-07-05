@@ -7,11 +7,10 @@ i = 0
 count = 0
 
 scores.each do |s|
-  if s == 'X'
-    shots << 10
+shots << if s == 'X'
+  10
   else
-    shots << s.to_i
-  end
+    s.to_i
 end
 
 while count < 10
