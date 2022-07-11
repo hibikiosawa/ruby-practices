@@ -1,4 +1,4 @@
-require 'date'
+rrequire 'date'
 require 'optparse'
 
 date = ARGV.getopts('y:', 'm:')
@@ -8,9 +8,11 @@ m = date['m'].to_i
 
 today = Date.today
 
-if y == 0 || m == 0
+if y == 0 && m == 0
   y = today.year
   m = today.month
+elsif y == 0 && m != 0
+  y = today.year
 end
 
 if y < 1970 || y > 2100
