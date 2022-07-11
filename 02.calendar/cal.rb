@@ -1,4 +1,4 @@
-rrequire 'date'
+require 'date'
 require 'optparse'
 
 date = ARGV.getopts('y:', 'm:')
