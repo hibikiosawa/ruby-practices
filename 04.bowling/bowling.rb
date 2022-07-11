@@ -15,12 +15,6 @@ scores.each do |s|
 end
 
 while count < 10
-  # 10フレーム目
-  if shots[i] + shots[i + 2] == 10
-    shots[i, 3].sum
-  else
-    shots[i] + shots[i + 2]
-  end
   if shots[i] == 10
     # ストライクの場合
     total = total.to_i + shots[i] + shots[i + 1] + shots[i + 2]
