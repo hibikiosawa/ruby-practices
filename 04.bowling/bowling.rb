@@ -8,20 +8,19 @@ count = 0
 
 scores.each do |s|
   shots << if s == 'X'
-             10
-           else
-             s.to_i
-           end
+    10
+  else
+    s.to_i
+  end
 end
 
 while count < 10
-  if count == 10
-    # 10フレーム目
-    if shots[i] + shots[i + 2] == 10
-      shots[i] + shots[i + 2] + shots[i + 3]
-    else
-      shots[i] + shots[i + 2]
-    end
+  # 10フレーム目
+  if shots[i] + shots[i + 2] == 10
+    shots[n, 3].sum
+  else
+    shots[i] + shots[i + 2]
+  end
   elsif shots[i] == 10
     # ストライクの場合
     total = total.to_i + shots[i] + shots[i + 1] + shots[i + 2]
@@ -41,4 +40,3 @@ while count < 10
 end
 
 puts total
-
