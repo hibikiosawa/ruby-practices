@@ -10,7 +10,7 @@ def input(args)
 end
 
 def output(arr,args)
-  r = args[:r].nil? ? 0 : arr.reverse!
+  args[:r].nil? ? 0 : arr.reverse!
   files = ((arr.size + 1).to_f / 3).ceil
   files.times do |row|
     col = 0
