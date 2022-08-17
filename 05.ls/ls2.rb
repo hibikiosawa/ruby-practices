@@ -29,7 +29,7 @@ def input(_args)
   Dir.glob('*')
 end
 
-def word_length(arr, _wordlength)
+def word_length(arr)
   nlinkmax = 0
   sizemax = 0
   arr.size.times do |row|
@@ -39,7 +39,7 @@ def word_length(arr, _wordlength)
   end
   nlinkmax = nlinkmax.to_s.length
   sizemax = sizemax.to_s.length
-  _wordlength = nlinkmax, sizemax
+  return wordlength = nlinkmax, sizemax
 end
 
 def file_convert_output(fil)
@@ -58,7 +58,7 @@ def permission_convert_output(pem)
 end
 
 def l_option_output(arr, row)
-  wordlength = word_length(arr, wordlength)
+  wordlength = word_length(arr)
   fs = File.lstat(arr[row])
   file_convert_output(fs.mode)
   permission_convert_output(fs.mode)
