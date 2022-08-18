@@ -39,7 +39,7 @@ def word_length(arr)
   end
   nlinkmax = nlinkmax.to_s.length
   sizemax = sizemax.to_s.length
-  return wordlength = nlinkmax, sizemax
+  wordlength = nlinkmax, sizemax
 end
 
 def file_convert_output(fil)
@@ -84,4 +84,3 @@ def no_option_output(arr)
 end
 
 main
-
