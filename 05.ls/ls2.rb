@@ -39,7 +39,7 @@ def word_length(arr)
   end
   nlinkmax = nlinkmax.to_s.length
   sizemax = sizemax.to_s.length
-  wordlength = nlinkmax, sizemax
+  [nlinkmax, sizemax]
 end
 
 def file_convert_output(fil)
@@ -58,14 +58,14 @@ def permission_convert_output(pem)
 end
 
 def l_option_output(arr, row)
-  wordlength = word_length(arr)
+  nlinkmax, sizemax = word_length(arr)
   fs = File.lstat(arr[row])
   file_convert_output(fs.mode)
   permission_convert_output(fs.mode)
   user = Etc.getpwuid(fs.uid).name
   group = Etc.getgrgid(fs.gid).name
-  nlink = fs.nlink.to_s.rjust(wordlength[2].to_i)
-  filesize = fs.size.to_s.rjust(wordlength[1])
+  nlink = fs.nlink.to_s.rjust(nlinkmax.to_i)
+  filesize = fs.size.to_s.rjust(sizemax)
   file = fs.atime.strftime('%-m月 %d %H:%M %Y')
   print " #{nlink} #{user} #{group} #{filesize} #{file} #{arr[row]}"
   print(" -> #{File.readlink(arr[row])}") if fs.symlink?
