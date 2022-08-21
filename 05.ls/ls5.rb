@@ -4,17 +4,15 @@ require 'optparse'
 require 'etc'
 
 def main
-  opt = OptionParser.new
   args = {}
-  opt.on('-l') { |v| args[:l] = v }
-  opt.parse!(ARGV)
-
-  arr = input(args)
-  commandline_judge(arr, args)
+  option = ARGV.getopts('arl')
+  arr = input(args,option)
+  commandline_judge(arr, args,option)
 end
 
-def commandline_judge(arr, args)
-  if args[:l]
+def commandline_judge(arr, args,option)
+  arr.reverse! if option["r"] == true
+  if option["l"] == true
     print "合計#{arr.size} \n"
     arr.size.times do |row|
       l_option_output(arr, row)
@@ -25,8 +23,13 @@ def commandline_judge(arr, args)
   end
 end
 
-def input(_args)
-  Dir.glob('*')
+def input(_args,option)
+  a = File::FNM_DOTMATCH
+  if option["a"] == true
+    Dir.glob('*',a)
+  else
+    Dir.glob('*')
+  end
 end
 
 def word_length(arr)
