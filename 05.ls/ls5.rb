@@ -5,20 +5,20 @@ require 'etc'
 
 def main
   option = ARGV.getopts('arl')
-  date_array = input(option)
-  commandline_judge(date_array, option)
+  files = input(option)
+  commandline_judge(files, option)
 end
 
-def commandline_judge(date_array, option)
-  date_array.reverse! if option['r']
+def commandline_judge(files, option)
+  files.reverse! if option['r']
   if option['l']
-    print "合計#{date_array.size} \n"
-    date_array.size.times do |row|
-      l_option_output(date_array, row)
+    print "合計#{files.size} \n"
+    files.size.times do |row|
+      l_option_output(files, row)
       print "\n"
     end
   else
-    no_option_output(date_array)
+    no_option_output(files)
   end
 end
 
@@ -27,11 +27,11 @@ def input(option)
   Dir.glob('*', a)
 end
 
-def word_length(date_array)
+def word_length(files)
   nlinkmax = 0
   sizemax = 0
-  date_array.size.times do |row|
-    fs = File::Stat.new(date_array[row])
+  files.size.times do |row|
+    fs = File::Stat.new(files[row])
     nlinkmax = fs.nlink if nlinkmax < fs.nlink
     sizemax = fs.size if sizemax < fs.size
   end
@@ -55,27 +55,27 @@ def permission_convert_output(pem)
   end
 end
 
-def l_option_output(date_array, row)
-  nlinkmax, sizemax = word_length(date_array)
-  fs = File.lstat(date_array[row])
+def l_option_output(files, row)
+  nlinkmax, sizemax = word_length(files)
+  fs = File.lstat(files[row])
   file_convert_output(fs.mode)
   permission_convert_output(fs.mode)
   user = Etc.getpwuid(fs.uid).name
   group = Etc.getgrgid(fs.gid).name
   nlink = fs.nlink.to_s.rjust(nlinkmax.to_i)
-  filesize = fs.size.to_s.rjust(sizemax)
-  file = fs.atime.strftime('%-m月 %d %H:%M %Y')
-  print " #{nlink} #{user} #{group} #{filesize} #{file} #{date_array[row]}"
-  print(" -> #{File.readlink(date_array[row])}") if fs.symlink?
+  file_size = fs.size.to_s.rjust(sizemax)
+  file_created = fs.atime.strftime('%-m月 %d %H:%M %Y')
+  print " #{nlink} #{user} #{group} #{file_size} #{file_created} #{files[row]}"
+  print(" -> #{File.readlink(files[row])}") if fs.symlink?
 end
 
-def no_option_output(date_array)
-  files = ((date_array.size + 1).to_f / 3).ceil
-  files.times do |row|
+def no_option_output(files)
+  files_output = ((files.size + 1).to_f / 3).ceil
+  files_output.times do |row|
     col = 0
     3.times do
-      print "#{date_array[row + col]} ".ljust(25)
-      col += files
+      print "#{files[row + col]} ".ljust(25)
+      col += files_output
     end
     puts "\n"
   end
