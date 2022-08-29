@@ -4,13 +4,10 @@ require 'optparse'
 require 'etc'
 
 def main
+  option = ARGV.getopts('lwc')
   files_input = ARGV[0]
   files = input(files_input)
-  commandline_judge(files_input)
-end
-
-def commandline_judge(files)
-  no_option_output(files)
+  output(files_input, option)
 end
 
 def input(files_input)
@@ -39,9 +36,16 @@ def count_words(file)
 end
 
 
-def no_option_output(files_input)
+def output(files_input,option)
   file = File.read(files_input)
-  print "#{count_lines(file)} #{count_words(file)} #{file.size}"
+  print "#{count_lines(file)} " if option['l']
+  print "#{count_words(file)} " if option['w']
+  print "#{file.size} " if option['c']
+
+  if option[:l].nil? && option[:w].nil? && option[:c].nil?
+    print "#{count_lines(file)} #{count_words(file)} #{file.size} "
+  end
+  print "#{files_input} \n"
 end
 
 main
