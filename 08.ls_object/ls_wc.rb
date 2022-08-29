@@ -39,7 +39,7 @@ def count_words(file)
   ary.size
 end
 
-def files_line_word_count(files)
+def files_line_word_total_count(files)
   lines_size = 0
   words_size = 0
   files_size = 0
@@ -62,13 +62,18 @@ def output(files,option)
     print "#{file_readed.size} " if option['c']
 
     if option["l"] == false && option["w"] == false && option["c"] == false 
-      print "#{count_lines(file_readed)} #{count_words(file_readed)} #{file_readed.size} "
+      print "#{count_lines(file_readed)}".rjust(8)
+      print "#{count_words(file_readed)}".rjust(8)
+      print "#{file_readed.size}".rjust(8)
     end
-    print "#{file} \n"
+    print " #{file} \n"
   end
   if files.size > 1
-    lines_size, words_size, files_size = files_line_word_count(files)
-    print "#{lines_size} #{words_size} #{files_size} total \n"
+    lines_size, words_size, files_size = files_line_word_total_count(files)
+    print "#{lines_size}".rjust(8)
+    print "#{words_size}".rjust(8)
+    print "#{files_size}".rjust(8)
+    print " total \n"
   end
 end
 
