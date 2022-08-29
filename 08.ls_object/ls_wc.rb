@@ -11,7 +11,11 @@ def main
 end
 
 def input(files_input)
-  Dir.glob(files_input)
+  if files_input.empty?
+    Dir.glob('*')
+  else
+    Dir.glob(files_input)
+  end
 end
 
 def word_length(files)
