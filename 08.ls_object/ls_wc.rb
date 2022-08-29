@@ -5,9 +5,9 @@ require 'etc'
 
 def main
   option = ARGV.getopts('lwc')
-  files_input = ARGV[0]
+  files_input = ARGV
   files = input(files_input)
-  output(files_input, option)
+  output(files, option)
 end
 
 def input(files_input)
@@ -36,16 +36,18 @@ def count_words(file)
 end
 
 
-def output(files_input,option)
-  file = File.read(files_input)
-  print "#{count_lines(file)} " if option['l']
-  print "#{count_words(file)} " if option['w']
-  print "#{file.size} " if option['c']
+def output(files,option)
+  files.each do |file|
+    file_readed = File.read(file)
+    print "#{count_lines(file_readed)} " if option['l']
+    print "#{count_words(file_readed)} " if option['w']
+    print "#{file_readed.size} " if option['c']
 
-  if option[:l].nil? && option[:w].nil? && option[:c].nil?
-    print "#{count_lines(file)} #{count_words(file)} #{file.size} "
+    if option[:l].nil? && option[:w].nil? && option[:c].nil?
+      print "#{count_lines(file_readed)} #{count_words(file_readed)} #{file_readed.size} "
+    end
+    print "#{file} \n"
   end
-  print "#{files_input} \n"
 end
 
 main
