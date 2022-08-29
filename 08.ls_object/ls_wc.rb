@@ -4,9 +4,9 @@ require 'optparse'
 require 'etc'
 
 def main
-  files_input = open(ARGV[0])
+  files_input = ARGV[0]
   files = input(files_input)
-  commandline_judge(files)
+  commandline_judge(files_input)
 end
 
 def commandline_judge(files)
@@ -14,8 +14,7 @@ def commandline_judge(files)
 end
 
 def input(files_input)
-  Dir.glob('files_input')
-  p files_input
+  Dir.glob(files_input)
 end
 
 def word_length(files)
@@ -30,12 +29,19 @@ def word_length(files)
   [nlinkmax, sizemax]
 end
 
-def no_option_output(files)
-line_count = 0
-  while files.gets
-    line_count += 1
-  end
-  print "#{line_count} #{files.size}"
+def count_lines(file)
+  file.lines.count
+end
+
+def count_words(file)
+  ary = file.split(/\s+/)
+  ary.size
+end
+
+
+def no_option_output(files_input)
+  file = File.read(files_input)
+  print "#{count_lines(file)} #{count_words(file)} #{file.size}"
 end
 
 main
