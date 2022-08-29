@@ -18,18 +18,6 @@ def input(files_input)
   end
 end
 
-def word_length(files)
-  size_max = 0
-  files.size.times do |row|
-    fs = File::Stat.new(files[row])
-    nlinkmax = fs.nlink if nlinkmax < fs.nlink
-    sizemax = fs.size if sizemax < fs.size
-  end
-  nlinkmax = nlinkmax.to_s.length
-  sizemax = sizemax.to_s.length
-  [nlinkmax, sizemax]
-end
-
 def count_lines(file)
   file.lines.count
 end
@@ -45,36 +33,31 @@ def files_line_word_total_count(files)
   files_size = 0
   files.each do |file|
     file_readed = File.read(file)
-    if files.size > 1
-      lines_size += count_lines(file_readed)
-      words_size += count_words(file_readed)
-      files_size += file_readed.size
-    end
+    next unless files.size > 1
+
+    lines_size += count_lines(file_readed)
+    words_size += count_words(file_readed)
+    files_size += file_readed.size
   end
   [lines_size, words_size, files_size]
 end
 
-def output(files,option)
+def output(files, option)
   files.each do |file|
     file_readed = File.read(file)
     print "#{count_lines(file_readed)} " if option['l']
     print "#{count_words(file_readed)} " if option['w']
     print "#{file_readed.size} " if option['c']
-
-    if option["l"] == false && option["w"] == false && option["c"] == false 
-      print "#{count_lines(file_readed)}".rjust(8)
-      print "#{count_words(file_readed)}".rjust(8)
-      print "#{file_readed.size}".rjust(8)
-    end
-    print " #{file} \n"
+    print count_lines(file_readed).to_s.rjust(8)
+    print count_words(file_readed).to_s.rjust(8)
+    print file_readed.size.to_s.rjust(8)
+    print " #{file} \n" if option['l'] == false && option['w'] == false && option['c'] == false
   end
-  if files.size > 1
-    lines_size, words_size, files_size = files_line_word_total_count(files)
-    print "#{lines_size}".rjust(8)
-    print "#{words_size}".rjust(8)
-    print "#{files_size}".rjust(8)
-    print " total \n"
-  end
+  lines_size, words_size, files_size = files_line_word_total_count(files)
+  print lines_size.to_s.rjust(8)
+  print words_size.to_s.rjust(8)
+  print files_size.to_s.rjust(8)
+  print " total \n" if files.size > 1
 end
 
 main
