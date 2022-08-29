@@ -35,6 +35,20 @@ def count_words(file)
   ary.size
 end
 
+def files_line_word_count(files)
+  lines_size = 0
+  words_size = 0
+  files_size = 0
+  files.each do |file|
+    file_readed = File.read(file)
+    if files.size > 1
+      lines_size += count_lines(file_readed)
+      words_size += count_words(file_readed)
+      files_size += file_readed.size
+    end
+  end
+  [lines_size, words_size, files_size]
+end
 
 def output(files,option)
   files.each do |file|
@@ -47,6 +61,10 @@ def output(files,option)
       print "#{count_lines(file_readed)} #{count_words(file_readed)} #{file_readed.size} "
     end
     print "#{file} \n"
+  end
+  if files.size > 1
+    lines_size, words_size, files_size = files_line_word_count(files)
+    print "#{lines_size} #{words_size} #{files_size} total \n"
   end
 end
 
