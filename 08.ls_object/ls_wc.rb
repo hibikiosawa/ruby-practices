@@ -43,7 +43,7 @@ def output(files,option)
     print "#{count_words(file_readed)} " if option['w']
     print "#{file_readed.size} " if option['c']
 
-    if option[:l].nil? && option[:w].nil? && option[:c].nil?
+    if option["l"] == false && option["w"] == false && option["c"] == false 
       print "#{count_lines(file_readed)} #{count_words(file_readed)} #{file_readed.size} "
     end
     print "#{file} \n"
