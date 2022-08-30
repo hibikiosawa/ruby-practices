@@ -6,16 +6,17 @@ require 'etc'
 def main
   option = ARGV.getopts('lwc')
   files_input = ARGV
-  files = input(files_input)
-  output(files, option)
+  if files_input.empty?
+    stdin = $stdin.read
+    output_stdin(stdin, option)
+  else
+    files = input(files_input)
+    output(files, option)
+  end
 end
 
 def input(files_input)
-  if files_input.empty?
-    Dir.glob('*')
-  else
-    Dir.glob(files_input)
-  end
+  Dir.glob(files_input)
 end
 
 def count_lines(file)
@@ -62,6 +63,16 @@ def output(files, option)
     print " #{file} \n" if option['l'] == false && option['w'] == false && option['c'] == false
   end
   total_output(files)
+end
+
+def output_stdin(stdin,option)
+  print "#{count_lines(stdin)} " if option['l']
+  print "#{count_words(stdin)} " if option['w']
+  print "#{stdin.size} " if option['c']
+  print count_lines(stdin).to_s.rjust(8)
+  print count_words(stdin).to_s.rjust(8)
+  print stdin.size.to_s.rjust(8)
+  print "\n"
 end
 
 main
