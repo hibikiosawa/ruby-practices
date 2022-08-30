@@ -6,18 +6,18 @@ require 'etc'
 def main
   option = ARGV.getopts('lwc')
   files_input = ARGV
-  if File.pipe?(STDIN)
+  if File.pipe?($stdin)
     stdin = $stdin.read
     output_stdin(stdin, option)
   else
     files = input(files_input)
-    output(files, option)
+    output_standard(files, option)
   end
 end
 
 def input(files_input)
   if files_input.empty?
-    Dir.glob("*")
+    Dir.glob('*')
   else
     Dir.glob(files_input)
   end
@@ -52,27 +52,31 @@ def total_output(files, option)
   print lines_size.to_s.rjust(8) if option['l']
   print words_size.to_s.rjust(8) if option['w']
   print files_size.to_s.rjust(8) if option['c']
+  if option['l'] == false && option['w'] == false && option['c'] == false
+    print lines_size.to_s.rjust(8)
+    print words_size.to_s.rjust(8)
+    print files_size.to_s.rjust(8)
+  end
   print " total \n" if files.size > 1
 end
 
-def output(files, option)
+def output_standard(files, option)
   files.each do |file|
     file_readed = File.read(file)
-    print "#{count_lines(file_readed)}".rjust(8) if option['l']
-    print "#{count_words(file_readed)}".rjust(8) if option['w']
-    print "#{file_readed.size}".rjust(8) if option['c']
+    print count_lines(file_readed).to_s.rjust(8) if option['l']
+    print count_words(file_readed).to_s.rjust(8) if option['w']
+    print file_readed.size.to_s.rjust(8) if option['c']
     if option['l'] == false && option['w'] == false && option['c'] == false
       print count_lines(file_readed).to_s.rjust(8)
       print count_words(file_readed).to_s.rjust(8)
       print file_readed.size.to_s.rjust(8)
     end
-    print " #{file}"
-    print "\n"
+    print " #{file} \n"
   end
-  total_output(files, option) if files.size > 1 
+  total_output(files, option) if files.size > 1
 end
 
-def output_stdin(stdin,option)
+def output_stdin(stdin, option)
   print "#{count_lines(stdin)} " if option['l']
   print "#{count_words(stdin)} " if option['w']
   print "#{stdin.size} " if option['c']
