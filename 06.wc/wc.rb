@@ -60,35 +60,28 @@ def output_total(files, option)
   print " total \n" if files.size > 1
 end
 
-def output_file_info(file_readed, file, option)
-  print count_lines(file_readed).to_s.rjust(8) if option['l']
-  print count_words(file_readed).to_s.rjust(8) if option['w']
-  print file_readed.size.to_s.rjust(8) if option['c']
+def output_file_info(file, option)
+  print count_lines(file).to_s.rjust(8) if option['l']
+  print count_words(file).to_s.rjust(8) if option['w']
+  print file.size.to_s.rjust(8) if option['c']
   if option['l'] == false && option['w'] == false && option['c'] == false
-    print count_lines(file_readed).to_s.rjust(8)
-    print count_words(file_readed).to_s.rjust(8)
-    print file_readed.size.to_s.rjust(8)
+    print count_lines(file).to_s.rjust(8)
+    print count_words(file).to_s.rjust(8)
+    print file.size.to_s.rjust(8)
   end
-  print " #{file} \n"
 end
 
 def output_standard(files, option)
   files.each do |file|
     file_readed = File.read(file)
-    output_file_info(file_readed, file, option)
+    output_file_info(file_readed, option)
+    print " #{file} \n"
   end
   output_total(files, option) if files.size > 1
 end
 
 def output_stdin(stdin, option)
-  print "#{count_lines(stdin)}".to_s.rjust(8) if option['l']
-  print "#{count_words(stdin)}".to_s.rjust(8) if option['w']
-  print "#{stdin.size}".to_s.rjust(8) if option['c']
-  if option['l'] == false && option['w'] == false && option['c'] == false
-    print count_lines(file_readed).to_s.rjust(8)
-    print count_words(file_readed).to_s.rjust(8)
-    print file_readed.size.to_s.rjust(8)
-  end
+  output_file_info(stdin, option)
   print "\n"
 end
 
