@@ -81,12 +81,14 @@ def output_standard(files, option)
 end
 
 def output_stdin(stdin, option)
-  print "#{count_lines(stdin)} " if option['l']
-  print "#{count_words(stdin)} " if option['w']
-  print "#{stdin.size} " if option['c']
-  print count_lines(stdin).to_s.rjust(8)
-  print count_words(stdin).to_s.rjust(8)
-  print stdin.size.to_s.rjust(8)
+  print "#{count_lines(stdin)}".to_s.rjust(8) if option['l']
+  print "#{count_words(stdin)}".to_s.rjust(8) if option['w']
+  print "#{stdin.size}".to_s.rjust(8) if option['c']
+  if option['l'] == false && option['w'] == false && option['c'] == false
+    print count_lines(file_readed).to_s.rjust(8)
+    print count_words(file_readed).to_s.rjust(8)
+    print file_readed.size.to_s.rjust(8)
+  end
   print "\n"
 end
 
