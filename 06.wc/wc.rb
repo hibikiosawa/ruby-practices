@@ -57,7 +57,7 @@ def output_total(files, option)
     print words_size.to_s.rjust(8)
     print files_size.to_s.rjust(8)
   end
-  print " total \n" if files.size > 1
+  puts " total \n" if files.size > 1
 end
 
 def output_file_info(file, option)
@@ -75,14 +75,14 @@ def output_standard(files, option)
   files.each do |file|
     file_readed = File.read(file)
     output_file_info(file_readed, option)
-    print " #{file} \n"
+    puts " #{file} \n"
   end
   output_total(files, option) if files.size > 1
 end
 
 def output_stdin(stdin, option)
   output_file_info(stdin, option)
-  print "\n"
+  puts
 end
 
 main
