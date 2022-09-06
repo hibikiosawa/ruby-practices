@@ -52,7 +52,7 @@ def output_total(files, option)
   print lines_size.to_s.rjust(8) if option['l']
   print words_size.to_s.rjust(8) if option['w']
   print files_size.to_s.rjust(8) if option['c']
-  if option['l'] == false && option['w'] == false && option['c'] == false
+  if !option['l'] && !option['w'] && !option['c']
     print lines_size.to_s.rjust(8)
     print words_size.to_s.rjust(8)
     print files_size.to_s.rjust(8)
@@ -64,7 +64,7 @@ def output_file_info(file, option)
   print count_lines(file).to_s.rjust(8) if option['l']
   print count_words(file).to_s.rjust(8) if option['w']
   print file.size.to_s.rjust(8) if option['c']
-  if option['l'] == false && option['w'] == false && option['c'] == false
+  if !option['l'] && !option['w'] && !option['c']
     print count_lines(file).to_s.rjust(8)
     print count_words(file).to_s.rjust(8)
     print file.size.to_s.rjust(8)
