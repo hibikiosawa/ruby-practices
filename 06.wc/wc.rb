@@ -38,7 +38,7 @@ def files_line_word_total_count(files)
   files_size = 0
   files.each do |file|
     file_readed = File.read(file)
-    next unless files.size > 1
+    next if files.size <= 1
 
     lines_size += count_lines(file_readed)
     words_size += count_words(file_readed)
