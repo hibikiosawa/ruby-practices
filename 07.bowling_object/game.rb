@@ -14,13 +14,12 @@ class Game
     scores_split = score.split(',')
     scores_split.each do |s|
       if s == 'X'
-        s.push(10, 0)
+        scores.push(10, 0)
       else
-        s.push(s.to_i)
+        scores.push(s.to_i)
       end
     end
     scores = scores.each_slice(2).map { |arr| arr }
-    p scores
     @frames = scores.map { |frame| Frame.new(frame[0], frame[1]) }
   end
 
@@ -40,8 +39,8 @@ class Game
                       total_score + @frames[i].score
                     end
     end
-    p total_score
+    puts total_score
   end
 end
 
-p Game.new(ARGV[0]).display_total_score
+Game.new(ARGV[0]).display_total_score
