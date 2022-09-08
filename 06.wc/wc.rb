@@ -32,27 +32,7 @@ def count_words(file)
   ary.size
 end
 
-def files_line_word_total_count(files)
-  lines_size = 0
-  words_size = 0
-  files_size = 0
-  files.each do |file|
-    if File::ftype(file) == "directory"
-      file_readed = file
-    else
-      file_readed = File.read(file)
-    end
-    next if files.size <= 1
-
-    lines_size += count_lines(file_readed)
-    words_size += count_words(file_readed)
-    files_size += file_readed.size
-  end
-  [lines_size, words_size, files_size]
-end
-
-def output_total(files, option)
-  lines_size, words_size, files_size = files_line_word_total_count(files)
+def output_total(files, option, lines_size, words_size, files_size)
   print lines_size.to_s.rjust(8) if option['l']
   print words_size.to_s.rjust(8) if option['w']
   print files_size.to_s.rjust(8) if option['c']
@@ -76,16 +56,23 @@ def output_file_info(file, option)
 end
 
 def output_standard(files, option)
+  lines_size = 0
+  words_size = 0
+  files_size = 0
   files.each do |file|
-    if File::ftype(file) == "directory"
-      file_readed = file
-    else
-      file_readed = File.read(file)
-    end
+    file_readed = if File.ftype(file) == 'directory'
+                    file
+                  else
+                    File.read(file)
+                  end
+    lines_size += count_lines(file_readed)
+    words_size += count_words(file_readed)
+    files_size += file_readed.size
+
     output_file_info(file_readed, option)
     puts " #{file} \n"
   end
-  output_total(files, option) if files.size > 1
+  output_total(files, option, lines_size, words_size, files_size) if files.size > 1
 end
 
 def output_stdin(stdin, option)
