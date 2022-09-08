@@ -37,7 +37,11 @@ def files_line_word_total_count(files)
   words_size = 0
   files_size = 0
   files.each do |file|
-    file_readed = File.read(file)
+    if File::ftype(file) == "directory"
+      file_readed = file
+    else
+      file_readed = File.read(file)
+    end
     next if files.size <= 1
 
     lines_size += count_lines(file_readed)
@@ -73,7 +77,11 @@ end
 
 def output_standard(files, option)
   files.each do |file|
-    file_readed = File.read(file)
+    if File::ftype(file) == "directory"
+      file_readed = file
+    else
+      file_readed = File.read(file)
+    end
     output_file_info(file_readed, option)
     puts " #{file} \n"
   end
