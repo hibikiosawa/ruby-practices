@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './shot'
 
 class Frame
@@ -9,7 +11,7 @@ class Frame
   end
 
   def score
-    [@first_shot.score,@second_shot.score].sum
+    [@first_shot.score, @second_shot.score].sum
   end
 
   def strike?
@@ -17,6 +19,6 @@ class Frame
   end
 
   def spare?
-    [@first_shot.score,@second_shot.score].sum == 10
+    [@first_shot.score, @second_shot.score].sum == 10
   end
 end
