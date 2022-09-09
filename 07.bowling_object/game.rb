@@ -27,7 +27,7 @@ class Game
     total_score = 0
 
     @frames.each_with_index do |frame, i|
-      next if i == 10
+      next if i >= 10
 
       total_score = if frame.strike? && @frames[i + 1].strike?
                       total_score + @frames[i].score + @frames[i + 1].score + @frames[i + 2].first_shot.score
