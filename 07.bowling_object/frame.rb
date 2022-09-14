@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './shot'
+require_relative 'shot'
 
 class Frame
   attr_reader :first_shot, :second_shot
