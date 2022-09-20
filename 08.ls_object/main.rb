@@ -10,13 +10,13 @@ class Main
   end
 
   def input
-    a = @option['a'].nil? ? 0 : File::FNM_DOTMATCH
+    a = @option['a'] == true ? File::FNM_DOTMATCH : 0
     files = Dir.glob('*',a)
     main(files) 
   end
 
   def main(files)
-    if @option['l'] = true
+    if @option['l'] == true
       LOptionOutput.new(files)
     else
       NoOptionOutput.new(files)
