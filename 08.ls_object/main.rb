@@ -1,16 +1,26 @@
 require 'optparse'
+require_relative 'no_option_output'
+require_relative 'l_option_output'
 
 class Main
 
   def initialize
-    option = ARGV.getopts('arl')
-    option_judge(option)
+    @option = ARGV.getopts('arl')
+    input
   end
 
-  def option_judge(option)
-    all = true if option['a'] 
-    reverse = true if option['r']
-    long_format = true if option['l']
+  def input
+    a = @option['a'].nil? ? 0 : File::FNM_DOTMATCH
+    files = Dir.glob('*',a)
+    main(files) 
+  end
+
+  def main(files)
+    if @option['l'] = true
+      LOptionOutput.new(files)
+    else
+      NoOptionOutput.new(files)
+    end
   end
 
 end
