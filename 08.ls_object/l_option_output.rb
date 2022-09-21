@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 require 'etc'
 class LOptionOutput
-
   def initialize(files)
     @files = files
     main(files)
@@ -31,7 +32,7 @@ class LOptionOutput
       nlinkmax = fs.nlink if nlinkmax < fs.nlink
       sizemax = fs.size if sizemax < fs.size
     end
-    [nlinkmax,sizemax]
+    [nlinkmax, sizemax]
   end
 
   def file_convert_output(file)
