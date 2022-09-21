@@ -14,8 +14,8 @@ class LOptionOutput
       file_permission = permission_convert_output(fs.mode)
       user = Etc.getpwuid(fs.uid).name
       group = Etc.getgrgid(fs.gid).name
-      nlink = fs.nlink.to_s
-      file_size = fs.size.to_s
+      nlink = fs.nlink.to_s.rjust(nlinkmax.to_s.size)
+      file_size = fs.size.to_s.rjust(sizemax.to_s.size)
       file_created = fs.atime.strftime('%-m月 %d %H:%M %Y')
       print "#{file_type}#{file_permission} #{nlink} #{user} #{group} #{file_size} #{file_created} #{files[row]}"
       print(" -> #{File.readlink(files[row])}") if fs.symlink?
@@ -31,6 +31,7 @@ class LOptionOutput
       nlinkmax = fs.nlink if nlinkmax < fs.nlink
       sizemax = fs.size if sizemax < fs.size
     end
+    [nlinkmax,sizemax]
   end
 
   def file_convert_output(file)
