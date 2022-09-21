@@ -6,12 +6,12 @@ class Main
 
   def initialize
     @option = ARGV.getopts('arl')
-    input
   end
 
   def input
     a = @option['a'] == true ? File::FNM_DOTMATCH : 0
     files = Dir.glob('*',a)
+    files.reverse! if @option['r'] == true 
     main(files) 
   end
 
@@ -25,4 +25,5 @@ class Main
 
 end
 
-Main.new
+ls = Main.new
+ls.input
