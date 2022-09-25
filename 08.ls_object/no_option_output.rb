@@ -7,7 +7,7 @@ class NoOptionOutput
   end
 
   def main
-    files_output = ((files.size + 1).to_f / 3).ceil
+    files_output = ((@files.size + 1).to_f / 3).ceil
     files_output.times do |row|
       col = 0
       3.times do
