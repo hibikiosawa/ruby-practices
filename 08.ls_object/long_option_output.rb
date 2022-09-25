@@ -6,21 +6,25 @@ class LongOptionOutput
     @files = files
   end
 
-  def main
+  def print_data
     @files.size.times do |row|
       nlinkmax, sizemax = word_length(@files)
       fs = File.lstat(@files[row])
-      file_type = file_convert_output(fs.ftype)
-      file_permission = permission_convert_output(fs.mode)
-      user = Etc.getpwuid(fs.uid).name
-      group = Etc.getgrgid(fs.gid).name
-      nlink = fs.nlink.to_s.rjust(nlinkmax.to_s.size)
-      file_size = fs.size.to_s.rjust(sizemax.to_s.size)
-      file_created = fs.atime.strftime('%-m月 %d %H:%M %Y')
-      print "#{file_type}#{file_permission} #{nlink} #{user} #{group} #{file_size} #{file_created} #{@files[row]}"
-      print(" -> #{File.readlink(files[row])}") if fs.symlink?
+      create_file_data(fs,nlinkmax,sizemax)
+      print "#{@file_type}#{@file_permission} #{@nlink} #{@user} #{@group} #{@file_size} #{@file_created} #{@files[row]} #{@symlink}"
       puts
     end
+  end
+
+  def create_file_data(fs,nlinkmax,sizemax)
+    @file_type = file_convert_output(fs.ftype)
+    @file_permission = permission_convert_output(fs.mode)
+    @user = Etc.getpwuid(fs.uid).name
+    @group = Etc.getgrgid(fs.gid).name
+    @nlink = fs.nlink.to_s.rjust(nlinkmax.to_s.size)
+    @file_size = fs.size.to_s.rjust(sizemax.to_s.size)
+    @file_created = fs.atime.strftime('%-m月 %d %H:%M %Y')
+    @symlink = " -> #{File.readlink(files[row])}" if fs.symlink?
   end
 
   def word_length(files)

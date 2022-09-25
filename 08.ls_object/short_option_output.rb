@@ -3,7 +3,6 @@
 class ShortOptionOutput
   def initialize(files)
     @files = files
-    main
   end
 
   def main

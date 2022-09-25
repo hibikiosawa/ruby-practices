@@ -20,7 +20,7 @@ class Main
     else
       output_option = ShortOptionOutput.new((input_files(option_a)))
     end
-    output_option.main
+    output_option.print_data
   end
 end
 
