@@ -16,10 +16,11 @@ class Main
   def option_judge
     option_a = @option['a'] == true ? File::FNM_DOTMATCH : 0
     if @option['l'] == true
-      LongOptionOutput.new(input_files(option_a))
+      output_option = LongOptionOutput.new((input_files(option_a)))
     else
-      ShortOptionOutput.new(input_files(option_a))
+      output_option = ShortOptionOutput.new((input_files(option_a)))
     end
+    output_option.main
   end
 end
 

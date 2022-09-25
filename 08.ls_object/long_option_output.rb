@@ -6,10 +6,10 @@ class LongOptionOutput
     @files = files
   end
 
-  def main(files)
-    files.size.times do |row|
-      nlinkmax, sizemax = word_length(files)
-      fs = File.lstat(files[row])
+  def main
+    @files.size.times do |row|
+      nlinkmax, sizemax = word_length(@files)
+      fs = File.lstat(@files[row])
       file_type = file_convert_output(fs.ftype)
       file_permission = permission_convert_output(fs.mode)
       user = Etc.getpwuid(fs.uid).name
@@ -17,7 +17,7 @@ class LongOptionOutput
       nlink = fs.nlink.to_s.rjust(nlinkmax.to_s.size)
       file_size = fs.size.to_s.rjust(sizemax.to_s.size)
       file_created = fs.atime.strftime('%-m月 %d %H:%M %Y')
-      print "#{file_type}#{file_permission} #{nlink} #{user} #{group} #{file_size} #{file_created} #{files[row]}"
+      print "#{file_type}#{file_permission} #{nlink} #{user} #{group} #{file_size} #{file_created} #{@files[row]}"
       print(" -> #{File.readlink(files[row])}") if fs.symlink?
       puts
     end
