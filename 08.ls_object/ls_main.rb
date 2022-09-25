@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'optparse'
-require_relative 'no_option_output'
-require_relative 'l_option_output'
+require_relative 'long_option_output'
+require_relative 'short_option_output'
 
 class Main
   def initialize
@@ -16,9 +16,9 @@ class Main
   def option_judge
     option_a = @option['a'] == true ? File::FNM_DOTMATCH : 0
     if @option['l'] == true
-      LOptionOutput.new(input_files(option_a))
+      LongOptionOutput.new(input_files(option_a))
     else
-      NoOptionOutput.new(input_files(option_a))
+      ShortOptionOutput.new(input_files(option_a))
     end
   end
 end
