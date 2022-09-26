@@ -5,7 +5,7 @@ class ShortOptionOutput
     @files = files
   end
 
-  def main
+  def print_data
     files_output = ((@files.size + 1).to_f / 3).ceil
     files_output.times do |row|
       col = 0

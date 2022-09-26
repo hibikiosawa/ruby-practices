@@ -10,15 +10,17 @@ class Main
   end
 
   def input_files(option_a)
-    files = Dir.glob('*', option_a)
+    Dir.glob('*', option_a)
   end
 
   def option_judge
     option_a = @option['a'] == true ? File::FNM_DOTMATCH : 0
     if @option['l'] == true
       output_option = LongOptionOutput.new((input_files(option_a)))
+      output_option = LongOptionOutput.new(input_files(option_a).reverse!) if @option['r'] == true
     else
       output_option = ShortOptionOutput.new((input_files(option_a)))
+      output_option = ShortOptionOutput.new((input_files(option_a).reverse!)) if @option['r'] == true
     end
     output_option.print_data
   end
