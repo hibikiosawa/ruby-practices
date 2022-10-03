@@ -14,13 +14,13 @@ class Main
   end
 
   def option_judge
-    option_a = @option['a'] == true ? File::FNM_DOTMATCH : 0
-    if @option['l'] == true
+    option_a = @option['a'] ? File::FNM_DOTMATCH : 0
+    if @option['l']
       output_option = LongOptionOutput.new((input_files(option_a)))
-      output_option = LongOptionOutput.new(input_files(option_a).reverse!) if @option['r'] == true
+      output_option = LongOptionOutput.new(input_files(option_a).reverse!) if @option['r']
     else
       output_option = ShortOptionOutput.new((input_files(option_a)))
-      output_option = ShortOptionOutput.new((input_files(option_a).reverse!)) if @option['r'] == true
+      output_option = ShortOptionOutput.new((input_files(option_a).reverse!)) if @option['r']
     end
     output_option.print_data
   end
