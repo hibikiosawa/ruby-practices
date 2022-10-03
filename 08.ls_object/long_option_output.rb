@@ -33,13 +33,9 @@ class LongOptionOutput
   end
 
   def word_length(files)
-    nlinkmax = 0
-    sizemax = 0
-    files.size.times do |row|
-      fs = File::Stat.new(files[row])
-      nlinkmax = fs.nlink if nlinkmax < fs.nlink
-      sizemax = fs.size if sizemax < fs.size
-    end
+    stats = files.map { |file| File::Stat.new(file) }
+    nlinkmax = stats.map(&:nlink).max
+    sizemax = stats.map(&:size).max
     [nlinkmax, sizemax]
   end
 
