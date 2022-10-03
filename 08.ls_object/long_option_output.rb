@@ -41,9 +41,9 @@ class LongOptionOutput
 
   def file_convert_output(file)
     file_permission = {
-      'characterSpecial' => 'c', 'directory' => 'd', 'blockSpecial' => 'b', 'file' => '-', 'link' => 'l', 'socket' => 's'
+      character_special:'c', directory:'d', block_special:'b', file:'-', link:'l', socket:'s'
     }
-    file_permission[file]
+    file_permission[:file]
   end
 
   def permission_convert_output(pem)
