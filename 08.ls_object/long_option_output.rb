@@ -7,24 +7,29 @@ class LongOptionOutput
   end
 
   def print_data
+    print "合計#{@files.size} \n"
     @files.size.times do |row|
       nlinkmax, sizemax = word_length(@files)
       file_status = File.lstat(@files[row])
-      create_file_data(file_status, nlinkmax, sizemax)
-      print "#{@file_type}#{@file_permission} #{@nlink} #{@user} #{@group} #{@file_size} #{@file_created} #{@files[row]} #{@symlink}"
+      dates = create_file_data(file_status, nlinkmax, sizemax,row)
+      print dates
       puts
     end
   end
 
-  def create_file_data(file_status, nlinkmax, sizemax)
-    @file_type = file_convert_output(file_status.ftype)
-    @file_permission = permission_convert_output(file_status.mode)
-    @user = Etc.getpwuid(file_status.uid).name
-    @group = Etc.getgrgid(file_status.gid).name
-    @nlink = file_status.nlink.to_s.rjust(nlinkmax.to_s.size)
-    @file_size = file_status.size.to_s.rjust(sizemax.to_s.size)
-    @file_created = file_status.atime.strftime('%-m月 %d %H:%M %Y')
-    @symlink = " -> #{File.readlink(files[row])}" if file_status.symlink?
+  def create_file_data(file_status, nlinkmax, sizemax,row)
+    symlink = " -> #{File.readlink(@files[row])}" if file_status.symlink?
+    dates =
+    [
+    "#{file_convert_output(file_status.ftype)}",
+    "#{permission_convert_output(file_status.mode)}",
+    " #{Etc.getpwuid(file_status.uid).name}",
+    " #{Etc.getgrgid(file_status.gid).name}",
+    " #{file_status.nlink.to_s.rjust(nlinkmax.to_s.size)}",
+    " #{file_status.size.to_s.rjust(sizemax.to_s.size)}",
+    " #{file_status.atime.strftime('%m月 %d %H:%M %Y')}",
+    " #{symlink}"
+  ].join
   end
 
   def word_length(files)
