@@ -28,7 +28,8 @@ class LongOptionOutput
     " #{file_status.nlink.to_s.rjust(nlinkmax.to_s.size)}",
     " #{file_status.size.to_s.rjust(sizemax.to_s.size)}",
     " #{file_status.atime.strftime('%m月 %d %H:%M %Y')}",
-    " #{symlink}"
+    " #{symlink}",
+    " #{@files[row]}"
   ].join
   end
 
